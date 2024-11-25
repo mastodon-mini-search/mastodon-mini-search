@@ -1,6 +1,6 @@
 import { createRestAPIClient, mastodon } from "masto"
 
-interface StatusDocument {
+export interface StatusDocument {
   id: string
   content: string
   uri: string
@@ -69,6 +69,6 @@ export default async function() {
   }
   await loadDocuments(documents)
   window.localStorage.setItem('status_documents', JSON.stringify(documents))
-  console.log(documents)
+  return documents
 }
 

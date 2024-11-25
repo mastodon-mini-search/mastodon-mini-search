@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import fetchStatuses from '../functions/fetchStatuses'
+import createIndex from '../functions/createIndex'
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
 
-
+async function doSearch() {
+  const documents = await fetchStatuses()
+  const index = createIndex(documents)
+  console.log(index.search('螃蟹'))
+  debugger
+}
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="fetchStatuses">count is {{ count }}</button>
+    <button type="button" @click="doSearch">count is {{ count }}</button>
     <p>
       Edit
       <code>components/HelloWorld.vue</code> to test HMR
