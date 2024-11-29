@@ -20,5 +20,8 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-
+ul {
+  padding: 0;
+  list-style: none;
+}
 </style>

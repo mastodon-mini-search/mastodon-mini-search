@@ -16,11 +16,16 @@ import MiniSearch, { SearchResult } from 'minisearch'
 import Filter from './Filter.vue'
 import Searcher from './Searcher.vue'
 import Results from './Results.vue'
+import createIndex from '../functions/createIndex'
 
 const store: ShallowRef<StatusStore | undefined> = shallowRef(await loadStore())
 const index: ShallowRef<MiniSearch | undefined> = shallowRef(undefined)
 const filter = reactive({})
 const results: ShallowRef<SearchResult[]> = shallowRef([])
+
+if (store.value) {
+  index.value = createIndex(store.value)
+}
 
 function saveStoreCreated(storeCreated: StatusStore) {
   saveStore(storeCreated)
