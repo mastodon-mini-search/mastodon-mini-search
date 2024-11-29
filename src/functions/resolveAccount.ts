@@ -1,15 +1,19 @@
-import { AccountSetting, ResolvedAccountSetting } from "../models/AccountSetting"
+import { ResolvedAccountSetting } from "../models/AccountSetting"
 import { createRestAPIClient } from "masto"
 
-export default async function(account: AccountSetting): Promise<ResolvedAccountSetting> {
+export default async function(acct: string): Promise<ResolvedAccountSetting> {
+  const parts = acct.split('@')
+  const username = parts[0]
+  const instanceUrl = `https://${parts[1]}`
+
   const masto = createRestAPIClient({
-    url: account.instanceUrl,
-    accessToken: account.apiKey
+    url: instanceUrl
   })
 
-  const data = await masto.v1.accounts.lookup({ acct: account.username })
+  const data = await masto.v1.accounts.lookup({ acct: username })
   return {
-    ...account,
+    instanceUrl,
+    username,
     accountId: data.id
   }
 }
