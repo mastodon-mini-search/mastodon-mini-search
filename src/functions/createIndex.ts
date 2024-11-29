@@ -1,10 +1,10 @@
 import MiniSearch from "minisearch"
-import { StatusDocument } from "./fetchStatuses"
+import { StatusStore } from "../models/StatusStore"
 
-export default function(documents: StatusDocument[]) {
+export default function(store: StatusStore) {
   const miniSearch = new MiniSearch({
     fields: ['content'],
-    storeFields: ['content', 'uri'],
+    idField: 'uri',
     tokenize(text, _) {
       // @ts-ignore
       const segmenter = Intl.Segmenter && new Intl.Segmenter("zh", { granularity: "word" })
@@ -17,6 +17,11 @@ export default function(documents: StatusDocument[]) {
       return tokens
     },
   })
-  miniSearch.addAll(documents)
+  Object.entries(store.statuses).forEach(([uri, status]) => {
+    miniSearch.add({
+      uri: uri,
+      content: status.content
+    })
+  })
   return miniSearch
 }

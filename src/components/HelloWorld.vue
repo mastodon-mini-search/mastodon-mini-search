@@ -2,14 +2,31 @@
 import { ref } from 'vue'
 import fetchStatuses from '../functions/fetchStatuses'
 import createIndex from '../functions/createIndex'
+import loadStore from '../functions/loadStore'
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
 
 async function doSearch() {
-  const documents = await fetchStatuses()
-  const index = createIndex(documents)
+  /*
+  const store = {
+    account: {
+      instanceUrl: 'https://fsk.im',
+      username: 'merely',
+      accountId: '111537734740727476'
+    },
+    position: {
+      statusMinId: '0',
+      favouriteMinId: '0',
+      bookmarkMinId: '0'
+    },
+    statuses: {}
+  }
+  */
+  const store = (await loadStore())!
+  await fetchStatuses(store)
+  const index = createIndex(store)
   console.log(index.search('螃蟹'))
   debugger
 }
