@@ -23,7 +23,7 @@ function markType(store: StatusStore, uri: string, type: StatusType) {
   }
 }
 
-export default async function (store: StatusStore) {
+export default async function (store: StatusStore, afterBatch?: () => void) {
   const masto = createRestAPIClient({
     url: store.account.instanceUrl,
     accessToken: store.account.apiKey
@@ -47,6 +47,9 @@ export default async function (store: StatusStore) {
         }
       })
       store.position.statusMinId = batch[0].id
+      if (afterBatch) {
+        afterBatch()
+      }
     }
   }
   await saveStore(store)

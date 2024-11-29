@@ -1,6 +1,6 @@
 export interface AccountSetting {
   instanceUrl: string
-  username: string
+  acct: string
   apiKey?: string
 }
 

@@ -13,7 +13,7 @@ export default async function(acct: string): Promise<ResolvedAccountSetting> {
   const data = await masto.v1.accounts.lookup({ acct: username })
   return {
     instanceUrl,
-    username,
+    acct,
     accountId: data.id
   }
 }
