@@ -3,6 +3,7 @@ import { StatusStore } from "../models/StatusStore"
 import stripHTML from "./stripHTML"
 import { bigram } from "n-gram"
 import isCJKWord from "./isCJKWord"
+import normalizeChinese from "./normalizeChinese"
 
 const SPACE_OR_PUNCTUATION = /[\n\r\p{Z}\p{P}]+/u
 
@@ -27,13 +28,15 @@ export default function(store: StatusStore) {
             CJKSegments[CJKSegments.length - 1] += word
           } else {
             CJKSegments.push('')
-            tokens.push(word.toLowerCase())
+            tokens.push(word)
           }
         })
         CJKSegments.forEach(segment => {
           if (segment.length > 0) {
+            const normalized = Array.from(segment).map(char => normalizeChinese(char))
+            normalized.forEach(char => tokens.push(char))
             // @ts-ignore
-            bigram(segment).forEach(token => tokens.push(token))
+            bigram(normalized).forEach(tokenArray => tokens.push(tokenArray.join('')))
           }
         })
       })
