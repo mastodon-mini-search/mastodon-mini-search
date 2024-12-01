@@ -2,7 +2,8 @@
   <Setup v-if="!store" @setupComplete="saveStoreCreated"/>
   <Loader v-if="store" :store="store" @loadComplete="saveStoreAndIndex"/>
   <Searcher v-if="index" :index="index" @searchComplete="saveResults"/>
-  <Results v-if="store && results.length > 0" :results="results" :store="store"/>
+  <Filter v-if="index" :filter="filter"/>
+  <Results v-if="store && results.length > 0" :results="results" :store="store" :filter="filter"/>
 </template>
 
 <script setup lang="ts">
@@ -17,10 +18,14 @@ import Filter from './Filter.vue'
 import Searcher from './Searcher.vue'
 import Results from './Results.vue'
 import createIndex from '../functions/createIndex'
+import FilterState from '../models/FilterState'
 
 const store: ShallowRef<StatusStore | undefined> = shallowRef(await loadStore())
 const index: ShallowRef<MiniSearch | undefined> = shallowRef(undefined)
-const filter = reactive({})
+const filter: FilterState = reactive({
+  post: true,
+  boost: true
+})
 const results: ShallowRef<SearchResult[]> = shallowRef([])
 
 if (store.value) {
