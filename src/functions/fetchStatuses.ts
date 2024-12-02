@@ -9,7 +9,9 @@ function saveStatus(store: StatusStore, status: mastodon.v1.Status) {
     store.statuses[status.uri] = {
       content: status.content,
       createdAt: status.createdAt,
-      types: []
+      types: [],
+      acct: status.account.acct,
+      id: status.id
     }
   }
 }

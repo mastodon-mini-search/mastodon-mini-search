@@ -6,6 +6,8 @@ export interface StatusDocument {
   content: string
   createdAt: string
   types: StatusType[]
+  acct: string
+  id: string
 }
 
 export interface LoadedPosition {
