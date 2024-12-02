@@ -18,15 +18,17 @@ const props = defineProps<{
   store: StatusStore
 }>()
 
+const status = computed(() => props.store.statuses[props.result.id])
+
+/*
 const typeNames = {
   post: '原創',
   boost: '轉嘟',
   favourite: '喜歡',
   bookmark: '書籤'
 }
-
-const status = computed(() => props.store.statuses[props.result.id])
 const types = computed(() => status.value.types.map(t => typeNames[t]).join(' '))
+*/
 </script>
 
 <style scoped>

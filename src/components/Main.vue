@@ -24,7 +24,9 @@ const store: ShallowRef<StatusStore | undefined> = shallowRef(await loadStore())
 const index: ShallowRef<MiniSearch | undefined> = shallowRef(undefined)
 const filter: FilterState = reactive({
   post: true,
-  boost: true
+  boost: true,
+  favourite: false,
+  bookmark: false
 })
 const results: ShallowRef<SearchResult[]> = shallowRef([])
 

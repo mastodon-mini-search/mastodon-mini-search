@@ -27,6 +27,7 @@ export default function(store: StatusStore) {
         if (isCJKWord(segment)) {
           const normalized = Array.from(segment).map(char => normalizeChinese(char))
           normalized.forEach(char => tokens.push(char))
+          // @ts-ignore
           bigram(normalized).forEach(tokenArray => tokens.push(tokenArray.join('')))
         } else {
           tokens.push(segment)
