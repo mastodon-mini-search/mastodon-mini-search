@@ -24,5 +24,8 @@ async function doSearch() {
 </script>
 
 <style scoped>
-
+form {
+  display: flex;
+  align-items: center;
+}
 </style>
