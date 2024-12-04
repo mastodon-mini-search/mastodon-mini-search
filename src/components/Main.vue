@@ -1,5 +1,8 @@
 <template>
   <Setup v-if="!store" @setupComplete="saveStoreCreated"/>
+  <div v-if="store">
+    當前賬號：{{ store.account.acct }} <BlockingButton :click="logOut">退出</BlockingButton>
+  </div>
   <Loader v-if="store" :store="store" @loadComplete="saveStoreAndIndex"/>
   <Searcher v-if="index" :index="index" @searchComplete="saveResults"/>
   <Filter v-if="index" :filter="filter"/>
@@ -19,6 +22,8 @@ import Searcher from './Searcher.vue'
 import Results from './Results.vue'
 import createIndex from '../functions/createIndex'
 import FilterState from '../models/FilterState'
+import BlockingButton from './BlockingButton.vue'
+import deleteStore from '../functions/deleteStore'
 
 const store: ShallowRef<StatusStore | undefined> = shallowRef(await loadStore())
 const index: ShallowRef<MiniSearch | undefined> = shallowRef(undefined)
@@ -49,6 +54,10 @@ function saveResults(rs: SearchResult[]) {
   results.value = rs
 }
 
+async function logOut() {
+  await deleteStore()
+  store.value = undefined
+}
 </script>
 
 <style scoped>

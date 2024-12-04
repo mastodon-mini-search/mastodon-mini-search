@@ -1,8 +1,5 @@
 <template>
   <div>
-    當前賬號：{{ props.store.account.acct }}
-  </div>
-  <div>
     已加載嘟文：{{ count }} <BlockingButton :click="doFetch">加載</BlockingButton>
   </div>
 </template>
