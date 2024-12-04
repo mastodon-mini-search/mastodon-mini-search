@@ -1,8 +1,8 @@
 <template>
   <article>
     <main v-html="status.content"></main>
-    <div>
-      <a :href="props.result.id" target="_blank">原文</a>
+    <div class="meta">
+      <a :href="link" target="_blank">原文</a> 來自 <a :href="authorLink" target="_blank">@{{ status.acct }}</a>
     </div>
     <hr>
   </article>
@@ -19,7 +19,8 @@ const props = defineProps<{
 }>()
 
 const status = computed(() => props.store.statuses[props.result.id])
-
+const link = computed(() => `${props.store.account.instanceUrl}/@${status.value.acct}/${status.value.id}`)
+const authorLink = computed(() => `${props.store.account.instanceUrl}/@${status.value.acct}`)
 /*
 const typeNames = {
   post: '原創',
@@ -37,5 +38,8 @@ main {
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.meta {
+  margin-top: 0.5rem;
 }
 </style>
