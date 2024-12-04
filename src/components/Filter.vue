@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input type="checkbox" v-model="props.filter.post"/>原創
-    <input type="checkbox" v-model="props.filter.boost"/>轉嘟
+    <label><input type="checkbox" v-model="props.filter.post"/>原創</label>
+    <label><input type="checkbox" v-model="props.filter.boost"/>轉嘟</label>
   </div>
 </template>
 

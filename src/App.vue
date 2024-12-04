@@ -1,6 +1,9 @@
 <template>
   <Suspense>
     <Main/>
+    <template #fallback>
+      正在加載...
+    </template>
   </Suspense>
 </template>
 
